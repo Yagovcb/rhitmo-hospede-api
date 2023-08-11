@@ -42,8 +42,8 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<UserResponse> findUserByEmail(String email) {
-        Optional<User> optionalUser = userRepository.findByUsernameAndActive(email, Boolean.TRUE);
+    public ResponseEntity<UserResponse> findUserByEmail(String username) {
+        Optional<User> optionalUser = userRepository.findByUsernameAndActive(username, Boolean.TRUE);
         if (optionalUser.isPresent()){
             return ResponseEntity.ok(UserUtils.makeUserResponse(optionalUser.get()));
         } else {

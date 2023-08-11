@@ -39,10 +39,10 @@ public class UserController {
         return userService.getAllUsers(Boolean.FALSE);
     }
 
-    @GetMapping(value = "/{email}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<UserResponse>getUserByEmail(@PathVariable(name = "email") String email){
+    @GetMapping(value = "/{username}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserResponse> getUserByUsername(@PathVariable(name = "username") String username){
         log.info("UserController :: Recuperando usuario por email cadastrado...");
-        return userService.findUserByEmail(email);
+        return userService.findUserByEmail(username);
     }
 
     @PatchMapping(value = "/updateInfo", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -52,10 +52,10 @@ public class UserController {
     }
 
 
-    @PatchMapping(value = "/updateInfo/{email}/role", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpStatus> updateUserInformationAddRole(@RequestBody AddRoleInUserRequest addRoleInUserRequest, @PathVariable(name = "email") String email){
+    @PatchMapping(value = "/updateInfo/{username}/role", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HttpStatus> updateUserInformationAddRole(@RequestBody AddRoleInUserRequest addRoleInUserRequest, @PathVariable(name = "username") String username){
         log.info("UserController :: Adicionando nova Role para usuario...");
-        return userService.updateUserInformationAddRole(addRoleInUserRequest, email);
+        return userService.updateUserInformationAddRole(addRoleInUserRequest, username);
     }
 
     @PostMapping(value = "/password-recover", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -71,9 +71,9 @@ public class UserController {
         return userService.registrationUser(registrationUserRequest);
     }
 
-    @DeleteMapping(value = "/{email}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<HttpStatus> deleteUser(@PathVariable(name = "email") String email) {
+    @DeleteMapping(value = "/{username}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HttpStatus> deleteUser(@PathVariable(name = "username") String username) {
         log.info("UserController :: Deletando usuario...");
-        return userService.deleteUser(email);
+        return userService.deleteUser(username);
     }
 }
