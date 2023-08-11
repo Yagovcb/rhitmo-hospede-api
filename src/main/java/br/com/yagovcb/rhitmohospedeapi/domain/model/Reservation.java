@@ -13,7 +13,7 @@ import java.time.LocalDate;
 @Setter
 @Entity
 @Builder
-@Table(name = "reserva", schema = "management")
+@Table(name = "reservation", schema = "management")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Reservation implements Serializable {

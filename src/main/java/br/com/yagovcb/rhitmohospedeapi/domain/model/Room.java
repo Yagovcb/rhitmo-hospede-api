@@ -12,7 +12,7 @@ import java.io.Serializable;
 @Setter
 @Entity
 @Builder
-@Table(name = "quarto", schema = "management")
+@Table(name = "room", schema = "management")
 @AllArgsConstructor
 @NoArgsConstructor
 public class Room implements Serializable {
