@@ -32,6 +32,7 @@ import java.util.Set;
 public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final GuestService guestService;
 
     public ResponseEntity<List<UserDTO>> getAllUsers(Boolean ativo) {
         Optional<List<User>> optionalUserList = userRepository.findAllByActive(ativo);
@@ -111,8 +112,11 @@ public class UserService {
                     .roles(Set.of(registrationUserRequest.getRole()))
                     .tokens(new ArrayList<>())
                     .build();
-
-            return ResponseEntity.status(HttpStatus.CREATED).body(UserUtils.makeUserResponse(userRepository.save(usuario)));
+            UserResponse userResponse = UserUtils.makeUserResponse(userRepository.save(usuario));
+            log.info("UserService :: Criando objeto Guest proporcional ao usuario...");
+            guestService.createGuestByUser(usuario, registrationUserRequest);
+            log.info("UserService :: Guest criado, finalizando processo...");
+            return ResponseEntity.status(HttpStatus.CREATED).body(userResponse);
         } else {
             throw new UserNotFoundException(APIExceptionCode.RESOURCE_NOT_FOUND,"Não foi encontrado nenhum usuario na Base");
         }

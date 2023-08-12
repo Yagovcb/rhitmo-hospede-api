@@ -2,6 +2,8 @@ package br.com.yagovcb.rhitmohospedeapi.domain.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+import jakarta.validation.constraints.FutureOrPresent;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -28,11 +30,18 @@ public class Reservation implements Serializable {
     @Column(name = "code", length = 8, nullable = false)
     private String code;
 
+    @Column(name = "reservation_date")
+    @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+    @JsonFormat(pattern="yyyy-MM-dd")
+    private LocalDate reservationDate;
+
+    @FutureOrPresent
     @Column(name = "checkin_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern="yyyy-MM-dd")
     private LocalDate dataCheckin;
 
+    @Future
     @Column(name = "checkout_date")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     @JsonFormat(pattern="yyyy-MM-dd")
@@ -43,4 +52,7 @@ public class Reservation implements Serializable {
 
     @OneToOne(orphanRemoval = true, fetch = FetchType.EAGER)
     private Room room;
+
+    @Column(name = "number_room_reserved")
+    private int numberRoomReserved;
 }

@@ -24,7 +24,7 @@ public class Room implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "number", length = 8, nullable = false)
+    @Column(name = "number", length = 8, nullable = false, unique = true)
     private int number;
 
     @Column(name = "number_guests", length = 8, nullable = false)

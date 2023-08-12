@@ -1,0 +1,49 @@
+package br.com.yagovcb.rhitmohospedeapi.application.controller;
+
+import br.com.yagovcb.rhitmohospedeapi.application.dto.RoomDTO;
+import br.com.yagovcb.rhitmohospedeapi.application.services.RoomService;
+import br.com.yagovcb.rhitmohospedeapi.domain.enums.Status;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+import java.util.List;
+
+@Slf4j
+@RestController
+@RequestMapping("/room")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "*", maxAge = 3600)
+public class RoomController {
+
+    private final RoomService roomService;
+
+    @GetMapping(value = "/active", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RoomDTO>> findAllRoomByStatusActive(@RequestParam LocalDate dataInicial, @RequestParam LocalDate dataFinal){
+        return roomService.findAllRoomByStatus(Status.DISPONIVEL, dataInicial, dataFinal);
+    }
+
+    @GetMapping(value = "/inactive", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<RoomDTO>> findAllRoomByStatusInactive(@RequestParam LocalDate dataInicial, @RequestParam LocalDate dataFinal){
+        return roomService.findAllRoomByStatus(Status.RESERVADO, dataInicial, dataFinal);
+    }
+    //Cadastra quarto
+    @PostMapping
+    public ResponseEntity<?> createRoom(){
+
+    }
+
+    //Atualiza quarto
+    @PatchMapping
+    public ResponseEntity<HttpStatus> updateRoom(){
+
+    }
+
+    //Deleta quarto
+    @DeleteMapping
+    public ResponseEntity<HttpStatus> deleteRoom(){}
+}
