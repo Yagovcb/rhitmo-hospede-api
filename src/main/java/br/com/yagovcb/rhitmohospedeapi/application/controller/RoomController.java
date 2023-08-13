@@ -3,6 +3,9 @@ package br.com.yagovcb.rhitmohospedeapi.application.controller;
 import br.com.yagovcb.rhitmohospedeapi.application.dto.RoomDTO;
 import br.com.yagovcb.rhitmohospedeapi.application.services.RoomService;
 import br.com.yagovcb.rhitmohospedeapi.domain.enums.Status;
+import br.com.yagovcb.rhitmohospedeapi.infrastructure.requests.CreateRoomRequest;
+import br.com.yagovcb.rhitmohospedeapi.infrastructure.requests.UpdateRoomRequest;
+import br.com.yagovcb.rhitmohospedeapi.infrastructure.response.RoomResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,19 +34,18 @@ public class RoomController {
     public ResponseEntity<List<RoomDTO>> findAllRoomByStatusInactive(@RequestParam LocalDate dataInicial, @RequestParam LocalDate dataFinal){
         return roomService.findAllRoomByStatus(Status.RESERVADO, dataInicial, dataFinal);
     }
-    //Cadastra quarto
-    @PostMapping
-    public ResponseEntity<?> createRoom(){
-
+    @PostMapping(value = "/", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RoomResponse> createRoom(@RequestBody CreateRoomRequest createRoomRequest){
+        return roomService.createRoom(createRoomRequest);
     }
 
-    //Atualiza quarto
-    @PatchMapping
-    public ResponseEntity<HttpStatus> updateRoom(){
-
+    @PatchMapping(value = "/update", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HttpStatus> updateRoom(@RequestBody UpdateRoomRequest updateRoomRequest){
+        return roomService.updateRoom(updateRoomRequest);
     }
 
-    //Deleta quarto
-    @DeleteMapping
-    public ResponseEntity<HttpStatus> deleteRoom(){}
+    @DeleteMapping(value = "/{roomNumber}", produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<HttpStatus> deleteRoom(@PathVariable(name = "roomNumber") int roomNumber){
+        return roomService.deleteRoom(roomNumber);
+    }
 }

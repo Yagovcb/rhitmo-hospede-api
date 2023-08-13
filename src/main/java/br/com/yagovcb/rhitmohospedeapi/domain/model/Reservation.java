@@ -1,5 +1,6 @@
 package br.com.yagovcb.rhitmohospedeapi.domain.model;
 
+import br.com.yagovcb.rhitmohospedeapi.domain.enums.Status;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
@@ -55,4 +56,14 @@ public class Reservation implements Serializable {
 
     @Column(name = "number_room_reserved")
     private int numberRoomReserved;
+
+    @Column(name = "number_days_reserved")
+    private int numberDaysReserved;
+
+    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @OneToOne(orphanRemoval = true, fetch = FetchType.EAGER)
+    private Guest guest;
 }

@@ -3,6 +3,8 @@ package br.com.yagovcb.rhitmohospedeapi.domain.model;
 import br.com.yagovcb.rhitmohospedeapi.domain.enums.Status;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 
 import java.io.Serial;
@@ -24,10 +26,12 @@ public class Room implements Serializable {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Column(name = "number", length = 8, nullable = false, unique = true)
-    private int number;
+    @Size(min = 1, max = 8)
+    @Column(name = "room_number", length = 8, nullable = false, unique = true)
+    private int roomNumber;
 
-    @Column(name = "number_guests", length = 8, nullable = false)
+    @Size(min = 1, max = 5)
+    @Column(name = "number_guests", length = 5, nullable = false)
     private int numberGuests;
 
     @Column(nullable = false)
@@ -38,6 +42,7 @@ public class Room implements Serializable {
     @Column(nullable = false)
     private String description;
 
+    @NotEmpty
     @Column(name = "daily_value")
     private Double dailyValue;
 }

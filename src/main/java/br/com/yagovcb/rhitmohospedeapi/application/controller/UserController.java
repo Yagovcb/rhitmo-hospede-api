@@ -42,7 +42,7 @@ public class UserController {
     @GetMapping(value = "/{username}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<UserResponse> getUserByUsername(@PathVariable(name = "username") String username){
         log.info("UserController :: Recuperando usuario por email cadastrado...");
-        return userService.findUserByEmail(username);
+        return userService.findUserByUsername(username);
     }
 
     @PatchMapping(value = "/updateInfo", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
